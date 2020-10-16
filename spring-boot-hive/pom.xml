@@ -14,15 +14,42 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.0.4.RELEASE</version>
+		<version>2.1.2.RELEASE</version>
 		<relativePath />
 	</parent>
 
 	<properties>
+		<!-- TBDS Begin-->
+		<spark.version>2.1.0</spark.version>
+		<hive.version>2.2.0-TBDS-4.0.4.1</hive.version>
+		<hadoop.version>2.7.2-TBDS-4.0.3.3</hadoop.version>
+		<hbase.version>1.2.1-TBDS-4.0.3.3</hbase.version>
+		<kafka.version>1.0.0-TBDS-5.0</kafka.version>
+		<flink.version>1.5.0-oceanus</flink.version>
+		<tbds.flink.version>1.7-tdflink-0.1.1</tbds.flink.version>
+		<hippo.version>4.1.2.0</hippo.version>
+		<scala.version>2.11.12</scala.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<!-- TBDS End-->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 	</properties>
+
+	<!-- TBDS Begin-->
+<!--	<repositories>-->
+<!--		<repository>-->
+<!--			<id>tencent-tsdb</id>-->
+<!--			<url>https://tbdsrepo.cloud.tencent.com/repository/tbds/</url>-->
+<!--		</repository>-->
+<!--		<repository>-->
+<!--			<id>tencent-public</id>-->
+<!--			<url>https://tbdsrepo.cloud.tencent.com/repository/maven-public/</url>-->
+<!--		</repository>-->
+<!--	</repositories>-->
+	<!-- TBDS End-->
 
 	<dependencies>
 		<dependency>
@@ -47,25 +74,202 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.data</groupId>-->
+<!--			<artifactId>spring-data-hadoop</artifactId>-->
+<!--			<version>2.5.0.RELEASE</version>-->
+<!--		</dependency>-->
+<!--		<dependency>-->
+<!--			<groupId>org.apache.hive</groupId>-->
+<!--			<artifactId>hive-jdbc</artifactId>-->
+<!--			<version>2.3.3</version>-->
+<!--			<exclusions>-->
+<!--				<exclusion>-->
+<!--					<groupId>org.eclipse.jetty.aggregate</groupId>-->
+<!--					<artifactId>*</artifactId>-->
+<!--				</exclusion>-->
+<!--			</exclusions>-->
+<!--		</dependency>-->
 		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-hadoop</artifactId>
-			<version>2.5.0.RELEASE</version>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jdbc</artifactId>
 		</dependency>
+
+		<!-- TBDS Begin-->
+		<!-- dependencies for scala -->
+		<dependency>
+			<groupId>org.scalatest</groupId>
+			<artifactId>scalatest_2.11</artifactId>
+			<version>3.0.5</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>${scala.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-reflect</artifactId>
+			<version>${scala.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-compiler</artifactId>
+			<version>${scala.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- dependencies for unit test -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- dependencies for HADOOP APP -->
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-common</artifactId>
+			<version>${hadoop.version}</version>
+			<!--            <scope>provided</scope>-->
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hadoop</groupId>
+			<artifactId>hadoop-hdfs</artifactId>
+			<version>${hadoop.version}</version>
+			<!--            <scope>provided</scope>-->
+		</dependency>
+		<dependency>
+			<groupId>com.tencent.tbds.sdk</groupId>
+			<artifactId>tbds-sdk-common</artifactId>
+			<version>4.0.3.3</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- dependencies for SPARK APP -->
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-core_2.11</artifactId>
+			<version>${spark.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-sql_2.11</artifactId>
+			<version>${spark.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-streaming_2.11</artifactId>
+			<version>${spark.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.spark</groupId>
+			<artifactId>spark-streaming-kafka-0-10_2.11</artifactId>
+			<version>${spark.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.kafka</groupId>
+					<artifactId>kafka_2.11</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- dependencies for HIVE APP -->
 		<dependency>
 			<groupId>org.apache.hive</groupId>
 			<artifactId>hive-jdbc</artifactId>
-			<version>2.3.3</version>
+			<version>${hive.version}</version>
+			<!--            <scope>provided</scope>-->
+		</dependency>
+
+		<!-- dependencies for HBase APP -->
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase-client</artifactId>
+			<version>${hbase.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.hbase</groupId>
+			<artifactId>hbase-common</artifactId>
+			<version>${hbase.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- dependencies for kafka client -->
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-clients</artifactId>
+			<version>${kafka.version}</version>
+		</dependency>
+
+		<!-- dependencies for flink -->
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-streaming-scala_2.11</artifactId>
+			<version>${tbds.flink.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-connector-kafka-0.10_2.11</artifactId>
+			<version>${tbds.flink.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.flink</groupId>
+			<artifactId>flink-connector-filesystem_2.11</artifactId>
+			<version>${tbds.flink.version}</version>
+		</dependency>
+
+
+		<!-- dependencies for hippo client -->
+		<dependency>
+			<groupId>com.tencent.hippo</groupId>
+			<artifactId>hippo-client</artifactId>
+			<version>${hippo.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<!-- dependencies for parsing command line options -->
+		<dependency>
+			<groupId>net.sf.jopt-simple</groupId>
+			<artifactId>jopt-simple</artifactId>
+			<version>4.9</version>
+			<scope>provided</scope>
+		</dependency>
+		<!-- TBDS End-->
+
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
 			<exclusions>
 				<exclusion>
-					<groupId>org.eclipse.jetty.aggregate</groupId>
-					<artifactId>*</artifactId>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
 				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.tomcat</groupId>
-			<artifactId>tomcat-jdbc</artifactId>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>23.0</version>
 		</dependency>
 	</dependencies>
 
@@ -75,8 +279,68 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<!-- TBDS Begin-->
+			<plugin>
+				<groupId>net.alchim31.maven</groupId>
+				<artifactId>scala-maven-plugin</artifactId>
+				<version>3.3.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>compile</goal>
+							<goal>testCompile</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<scalaVersion>${scala.version}</scalaVersion>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+						<configuration>
+							<artifactSet>
+								<includes>
+									<include>org.apache.kafka:kafka-clients</include>
+									<include>org.apache.flink:flink-connector-filesystem_2.11</include>
+									<include>org.apache.spark:spark-streaming-kafka-0-10_2.11</include>
+								</includes>
+							</artifactSet>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+<!--			<plugin>-->
+<!--				<groupId>org.apache.maven.plugins</groupId>-->
+<!--				<artifactId>maven-assembly-plugin</artifactId>-->
+<!--				<version>3.1.0</version>-->
+<!--				<executions>-->
+<!--					<execution>-->
+<!--						<id>make-package</id>-->
+<!--						<phase>package</phase>-->
+<!--						<goals>-->
+<!--							<goal>single</goal>-->
+<!--						</goals>-->
+<!--						<configuration>-->
+<!--							<appendAssemblyId>false</appendAssemblyId>-->
+<!--							<descriptors>-->
+<!--								<descriptor>src/main/assembly/package.xml</descriptor>-->
+<!--							</descriptors>-->
+<!--						</configuration>-->
+<!--					</execution>-->
+<!--				</executions>-->
+<!--			</plugin>-->
+			<!-- TBDS End-->
 		</plugins>
 	</build>
-
 
 </project>
