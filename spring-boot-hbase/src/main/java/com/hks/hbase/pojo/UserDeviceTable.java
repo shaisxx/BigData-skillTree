@@ -7,7 +7,7 @@ import java.util.Collections;
 public class UserDeviceTable extends HBaseTable {
 
     public UserDeviceTable() {
-        super("user_device_id");
+        super("user_device_id22");
     }
 
     @Override
