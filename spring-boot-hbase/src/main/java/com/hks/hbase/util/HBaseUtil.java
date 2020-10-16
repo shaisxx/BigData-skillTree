@@ -44,6 +44,14 @@ public class HBaseUtil {
                     //zookeeper根znode路径,默认为/hbase
                     conf.set("zookeeper.znode.parent", config.getZnodeParent());
                 }
+                if (!isEmptyOrWhiteSpace(config.getSecureid())) {
+                    //zookeeper根znode路径,默认为/hbase
+                    conf.set("hbase.security.authentication.tbds.secureid", config.getSecureid());
+                }
+                if (!isEmptyOrWhiteSpace(config.getSecurekey())) {
+                    //zookeeper根znode路径,默认为/hbase
+                    conf.set("hbase.security.authentication.tbds.securekey", config.getSecurekey());
+                }
                 if (!isEmptyOrWhiteSpace(config.getPause())) {
                     //失败重试时的等待时间，随着重试次数越多,重试等待时间越长，单位ms，默认100ms
                     conf.set("hbase.client.pause", config.getPause());
@@ -375,12 +383,12 @@ public class HBaseUtil {
             }
 
             Scan scan = new Scan();
-            scan.withStartRow(pageModel.getPageStartRowKey());
-            //scan.setStartRow(pageModel.getPageStartRowKey());
-            if (endRowKey != null) {
-                //scan.setStopRow(endRowKey);
-                scan.withStopRow(endRowKey);
-            }
+//            scan.withStartRow(pageModel.getPageStartRowKey());
+//            //scan.setStartRow(pageModel.getPageStartRowKey());
+//            if (endRowKey != null) {
+//                //scan.setStopRow(endRowKey);
+//                scan.withStopRow(endRowKey);
+//            }
             PageFilter pageFilter = new PageFilter(pageModel.getPageSize() + 1);
             if (filterList != null) {
                 filterList.addFilter(pageFilter);

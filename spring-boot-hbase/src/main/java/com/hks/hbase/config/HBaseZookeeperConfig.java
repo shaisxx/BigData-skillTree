@@ -11,6 +11,27 @@ import org.springframework.context.annotation.PropertySources;
         @PropertySource(value = "${zookeeper.properties}", ignoreResourceNotFound = true)
 })
 public class HBaseZookeeperConfig {
+    @Value("${hbase.zookeeper.quorum}")
+    private String quorum;
+    @Value("${hbase.zookeeper.property.clientPort}")
+    private String port;
+    @Value("${zookeeper.znode.parent}")
+    private String znodeParent;
+    @Value("${hbase.security.authentication.tbds.secureid}")
+    private String secureid;
+    @Value("${hbase.security.authentication.tbds.securekey}")
+    private String securekey;
+    @Value("${hbase.client.pause}")
+    private String pause;
+    @Value("${hbase.client.retries.number}")
+    private String retriesNumber;
+    @Value("${hbase.rpc.timeout}")
+    private String rpcTimeOut;
+    @Value("${hbase.client.operation.timeout}")
+    private String operationTimeout;
+    @Value("${hbase.client.scanner.timeout.period}")
+    private String scannerTimeout;
+
     public String getQuorum() {
         return quorum;
     }
@@ -21,6 +42,14 @@ public class HBaseZookeeperConfig {
 
     public String getZnodeParent() {
         return znodeParent;
+    }
+
+    public String getSecureid() {
+        return secureid;
+    }
+
+    public String getSecurekey() {
+        return securekey;
     }
 
     public String getPause() {
@@ -43,24 +72,6 @@ public class HBaseZookeeperConfig {
         return scannerTimeout;
     }
 
-    @Value("${hbase.zookeeper.quorum}")
-    private String quorum;
-    @Value("${hbase.zookeeper.property.clientPort}")
-    private String port;
-    @Value("${zookeeper.znode.parent}")
-    private String znodeParent;
-    @Value("${hbase.client.pause}")
-    private String pause;
-    @Value("${hbase.client.retries.number}")
-    private String retriesNumber;
-    @Value("${hbase.rpc.timeout}")
-    private String rpcTimeOut;
-    @Value("${hbase.client.operation.timeout}")
-    private String operationTimeout;
-
-    @Value("${hbase.client.scanner.timeout.period}")
-    private String scannerTimeout;
-
     public void setQuorum(String quorum) {
         this.quorum = quorum;
     }
@@ -71,6 +82,14 @@ public class HBaseZookeeperConfig {
 
     public void setZnodeParent(String znodeParent) {
         this.znodeParent = znodeParent;
+    }
+
+    public void setSecureid(String secureid) {
+        this.secureid = secureid;
+    }
+
+    public void setSecurekey(String securekey) {
+        this.securekey = securekey;
     }
 
     public void setPause(String pause) {
