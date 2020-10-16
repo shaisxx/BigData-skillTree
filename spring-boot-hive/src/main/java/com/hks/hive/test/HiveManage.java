@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 public class HiveManage {
 
-    private static final String URLHIVE = "jdbc:hive2://127.0.0.1:10000/default";
+    private static final String URLHIVE = "jdbc:hive2://172.16.40.19:10000/db_hive_partner";
     private static Connection connection = null;
 
 
@@ -18,7 +18,7 @@ public class HiveManage {
                 if (null == connection) {
                     try {
                         Class.forName("org.apache.hive.jdbc.HiveDriver");
-                        connection = DriverManager.getConnection(URLHIVE, "zhangsan", "123456789");
+                        connection = DriverManager.getConnection(URLHIVE, "admin", "Tbds@2020");
                     } catch (SQLException e) {
                         e.printStackTrace();
                     } catch (ClassNotFoundException e) {
